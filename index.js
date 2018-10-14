@@ -5,7 +5,8 @@ const client = new Discord.Client();
 var prefix = ".";
 var started = false;
 client.on("ready", () => {
-  console.log(`MEE6TOOLS запущен!`);
+  console.log(`InfTools has started!`);
+  client.user.setActivity(`InfTools v1.1`);
 });
 function exit() {
     setTimeout(function() {
