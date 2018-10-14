@@ -6,7 +6,7 @@ var prefix = ".";
 var started = false;
 client.on("ready", () => {
   console.log(`InfTools has started!`);
-  client.user.setActivity(`InfTools v1.1`);
+  client.user.setActivity('InfTools', { type: 'PLAYING' });
 });
 function exit() {
     setTimeout(function() {
