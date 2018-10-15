@@ -5,8 +5,13 @@ const client = new Discord.Client();
 var prefix = ".";
 var started = false;
 client.on("ready", () => {
+  var timer = 0;
   console.log(`InfTools запущен!`);
-  client.user.setActivity('InfTools 1.2', { type: 'PLAYING' });
+  client.user.setActivity('InfTools v1.2a | 0 минут', { type: 'PLAYING' });
+  var j = schedule.scheduleJob('*/1 * * * *', function(){
+	timer+=1;
+	client.user.setActivity('InfTools v1.2a | '+timer+' минут', { type: 'PLAYING' });
+  });
 });
 function exit() {
     setTimeout(function() {
@@ -15,6 +20,89 @@ function exit() {
 }
 client.on("message", message => {
 	if (message.author.id != client.user.id) return;
+	if (message.content==`${prefix}help`) {
+		message.channel.send({embed: {
+			"title": "Доступные команды InfTools",
+			"description": "Здесь показаны все доступные вам команды:",
+			"color": 3384201,
+			"footer": {
+			  "text": "InfTools v1.2a"
+			},
+			"author": {
+			  "name": message.author.username,
+			  "icon_url": message.author.avatarURL
+			},
+			"fields": [
+			  {
+				"name": ".status",
+				"value": "Узнать состояние MEE6TOOL"
+			  },
+			  {
+				"name": ".start",
+				"value": "Запустить MEE6STOOL"
+			  },
+			  {
+				"name": ".stop",
+				"value": "Завершить InfTools"
+			  },
+			  {
+				"name": ".embed",
+				"value": "Создать сообщение в блоке"
+			  },
+			  {
+				"name": ".watching",
+				"value": "Установить статус просмотра чего-либо"
+			  },
+			  {
+				"name": ".playing",
+				"value": "Установить статус игры во что-либо"
+			  },
+			  {
+				"name": ".listening",
+				"value": "Установить статус прослушивания чего-либо"
+			  },
+			  {
+				"name": ".streaming",
+				"value": "Установить статус стрима"
+			  },
+			  {
+				"name": ".author",
+				"value": "Информация о создателе бота"
+			  }
+			]
+		}
+		});
+	}
+	if (message.content==`${prefix}status`) {
+		message.delete();
+		if(started==true) {
+			message.channel.send({embed: {
+				"title": "Статус программы",
+				"color": 8513310,
+				"footer": {
+				"text": "На данный момент, программа запущена."
+				},
+				  "author": {
+				  "name": message.author.username,
+				  "icon_url": message.author.avatarURL
+				}
+			}
+			});
+		}else{
+			message.channel.send({embed: {
+				"title": "Статус программы",
+				"color": 16722249,
+				"footer": {
+				"text": "Программа не запущена."
+				},
+				  "author": {
+				  "name": message.author.username,
+				  "icon_url": message.author.avatarURL
+				}
+			}
+		});
+		}
+	}
 	if (message.content==`${prefix}start`) {
 		message.delete(0);
 		if(started != true) {
@@ -81,7 +169,7 @@ client.on("message", message => {
 				"title": "Автор",
 				"color": 11116789,
 				"footer": {
-				"text": "Создано InfiniteC0re | v1.2 (Extended version)"
+				"text": "Создано InfiniteC0re | v1.2"
 				},
 				  "author": {
 				  "name": message.author.username,
