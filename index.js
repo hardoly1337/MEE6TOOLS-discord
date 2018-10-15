@@ -5,8 +5,7 @@ const client = new Discord.Client();
 var prefix = ".";
 var started = false;
 client.on("ready", () => {
-  console.log(`InfTools has started!`);
-  client.user.setActivity('InfTools', { type: 'PLAYING' });
+  console.log(`InfTools запущен!`);
 });
 function exit() {
     setTimeout(function() {
@@ -32,8 +31,8 @@ client.on("message", message => {
 				}
 			}
 			}).then(sentMessage => {
-					sentMessage.delete(5000);
-				});
+				sentMessage.delete(5000);
+			});
 			var timer = schedule.scheduleJob('*/1 * * * *', function(){
 				var rand = crypto.randomBytes(20).toString('hex');
 				message.channel.send(rand).then(sentMessage => {
@@ -51,10 +50,10 @@ client.on("message", message => {
 				  "name": message.author.username,
 				  "icon_url": message.author.avatarURL
 				}
-				}
-			}).then(sentMessage => {
-					sentMessage.delete(5000);
-				});
+			}
+		}).then(sentMessage => {
+				sentMessage.delete(5000);
+			});
 		}
 	}
 	if (message.content==`${prefix}stop`) {
@@ -69,10 +68,10 @@ client.on("message", message => {
 				  "name": message.author.username,
 				  "icon_url": message.author.avatarURL
 				}
-				}
+			}
 			}).then(sentMessage => {
-					sentMessage.delete(5000);
-				});
+				sentMessage.delete(5000);
+			});
 		exit();
 	}
 	if (message.content==`${prefix}author`) {
@@ -81,14 +80,14 @@ client.on("message", message => {
 				"title": "Автор",
 				"color": 11116789,
 				"footer": {
-				"text": "Создано InfiniteC0re | v1.1"
+				"text": "Создано InfiniteC0re | v1.2 (Extended version)"
 				},
 				  "author": {
 				  "name": message.author.username,
 				  "icon_url": message.author.avatarURL
-				}
-				}
-			});
+			}
+		}
+		});
 	}
 	if (message.content.startsWith(`${prefix}embed`)) {
 		message.delete(0);
@@ -97,17 +96,17 @@ client.on("message", message => {
 		var content = args.slice(0).join(" ");
 		if(content != "") {
 			message.channel.send({embed: {
-					"title": "",
-					"color": 2528972,
-					"footer": {
-					"text": content
-					},
-					  "author": {
-					  "name": message.author.username,
-					  "icon_url": message.author.avatarURL
-					}
-					}
-				});
+				"title": "",
+				"color": 2528972,
+				"footer": {
+				"text": content
+				},
+					"author": {
+					"name": message.author.username,
+					"icon_url": message.author.avatarURL
+				}
+				}
+			});
 		}else{
 			message.channel.send({embed: {
 				"title": ".embed",
@@ -122,7 +121,144 @@ client.on("message", message => {
 				}
 			}).then(sentMessage => {
 					sentMessage.delete(5000);
+			});
+		}
+	}
+	if(message.content.startsWith(`${prefix}watching`)) {
+		const args = message.content.slice('.').trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		message.delete();
+		var content = args.slice(0).join(" ");
+		if(content != "") {
+			client.user.setActivity(content, { type: 'WATCHING' });
+			message.channel.send({embed: {
+					"title": ".watching",
+					"color": 8513310,
+					"footer": {
+					"text": "Установлено на "+content
+					},
+					  "author": {
+					  "name": message.author.username,
+					  "icon_url": message.author.avatarURL
+					}
+				}
+				}).then(sentMessage => {
+					sentMessage.delete(5000);
 				});
+		}else{
+			message.channel.send({embed: {
+				"title": ".watching",
+				"color": 16722249,
+				"footer": {
+				"text": "Имя не может быть пустым!"
+				},
+				  "author": {
+				  "name": message.author.username,
+				  "icon_url": message.author.avatarURL
+				}
+			}
+		}).then(sentMessage => {
+				sentMessage.delete(5000);
+			});
+	}
+	}
+	if(message.content.startsWith(`${prefix}playing`)) {
+		const args = message.content.slice('.').trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		message.delete();
+		var content = args.slice(0).join(" ");
+		if(content != "") {
+			client.user.setActivity(content, { type: 'PLAYING' });
+			message.channel.send({embed: {
+					"title": ".playing",
+					"color": 8513310,
+					"footer": {
+					"text": "Установлено на "+content
+					},
+					  "author": {
+					  "name": message.author.username,
+					  "icon_url": message.author.avatarURL
+					}
+				}
+				}).then(sentMessage => {
+					sentMessage.delete(5000);
+				});
+		}
+	}
+	if(message.content.startsWith(`${prefix}listening`)) {
+		const args = message.content.slice('.').trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		message.delete();
+		var content = args.slice(0).join(" ");
+		if(content != "") {
+			client.user.setActivity(content, { type: 'LISTENING' });
+			message.channel.send({embed: {
+					"title": ".listening",
+					"color": 8513310,
+					"footer": {
+					"text": "Установлено на "+content
+					},
+					  "author": {
+					  "name": message.author.username,
+					  "icon_url": message.author.avatarURL
+					}
+				}
+				}).then(sentMessage => {
+					sentMessage.delete(5000);
+				});
+		}else{
+			message.channel.send({embed: {
+				"title": ".listening",
+				"color": 16722249,
+				"footer": {
+				"text": "Имя не может быть пустым!"
+				},
+				  "author": {
+				  "name": message.author.username,
+				  "icon_url": message.author.avatarURL
+				}
+			}
+		}).then(sentMessage => {
+				sentMessage.delete(5000);
+			});
+		}
+	}
+	if(message.content.startsWith(`${prefix}streaming`)) {
+		const args = message.content.slice('.').trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		message.delete();
+		var content = args.slice(0).join(" ");
+		if(content != "") {
+			client.user.setActivity(content, { type: 'STREAMING' });
+			message.channel.send({embed: {
+					"title": ".streaming",
+					"color": 8513310,
+					"footer": {
+					"text": "Установлено на "+content
+					},
+					  "author": {
+					  "name": message.author.username,
+					  "icon_url": message.author.avatarURL
+					}
+				}
+				}).then(sentMessage => {
+					sentMessage.delete(5000);
+				});
+		}else{
+			message.channel.send({embed: {
+				"title": ".streaming",
+				"color": 16722249,
+				"footer": {
+				"text": "Имя не может быть пустым!"
+				},
+				  "author": {
+				  "name": message.author.username,
+				  "icon_url": message.author.avatarURL
+				}
+			}
+		}).then(sentMessage => {
+				sentMessage.delete(5000);
+			});
 		}
 	}
 });
